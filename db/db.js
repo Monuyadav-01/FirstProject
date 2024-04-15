@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const mongodbUrl = "mongodb://localhost:27017/hotels"
+const mongodbUrl = process.env.MONGOBDB_URL
 
 mongoose.connect(mongodbUrl, {
     // useNewUrlParser: true, // This option is still needed
