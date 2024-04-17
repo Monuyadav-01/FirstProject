@@ -4,7 +4,7 @@ const mongodbUrl = process.env.MONGOBDB_URL
 
 mongoose.connect(mongodbUrl, {
     // useNewUrlParser: true, // This option is still needed
-    // Remove newUnifiedTopology option
+    
 })
 
 const db = mongoose.connection

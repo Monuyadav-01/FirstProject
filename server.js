@@ -1,24 +1,35 @@
 const express = require('express');
+// const Person = require('./models/Person')
 const app = express();
 require('dotenv').config()
-const port = process.env.PORT||3000;
+const port = process.env.PORT || 3000;
 const db = require('./db/db');
-
+const passport = require('./auth')
 const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // Corrected the invocation of bodyParser
-//Import menuitem model 
 
-app.get('/', (req, res) => res.send("Welcome to our hotel, please order food!"));
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
 
+const logRequest = (req, res, next) => {
+    console.log(`[${new Date().toLocaleString()}] Request Made to : ${req.originalUrl}`);
+    next(); // Move on to the next phase
+}
+app.use(logRequest);
+app.use(passport.initialize());
+const localAuthMiddleware = passport.authenticate('local', {session: false})
 
+app.get('/', function (req, res) {
+    res.send('Welcome to our Hotel');
+})
 
+// Import the router files
+const personRoutes = require('./routes/person.routes');
+const menuItemRoutes = require('./routes/menuitem.routes');
 
-
-// import person routes
-const personRoutes = require('./routes/person.routes.js')
-app.use('/person' , personRoutes)
-// import menu routes
-const menuRoutes = require('./routes/menuitem.routes.js')
-app.use('/menu',menuRoutes)
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// Use the routers
+app.use('/person',localAuthMiddleware, personRoutes);
+app.use('/menu', menuItemRoutes);
+  
+app.listen(port, ()=>{
+    console.log('listening on port 3000');
+})

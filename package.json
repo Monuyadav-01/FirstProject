@@ -9,10 +9,14 @@
   "author": "monu yadav",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "local": "^0.3.3",
     "mongoose": "^8.3.1",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   }
 }
